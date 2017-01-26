@@ -1,14 +1,12 @@
 import React from 'react'
-import DuckImage from '../assets/Duck.jpg'
 import './HomeView.scss'
+import SignUpForm from '../../../components/SignUpForm'
 
 export const HomeView = () => (
   <div>
-    <h4>Welcome!</h4>
-    <img
-      alt='This is a duck, because Redux!'
-      className='duck'
-      src={DuckImage} />
+    <h1>Welcome to Customer Support ticketing system</h1>
+    <p>Please login or sign up</p>
+    <SignUpForm/>
   </div>
 )
 

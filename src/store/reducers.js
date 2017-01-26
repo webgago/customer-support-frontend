@@ -1,9 +1,13 @@
-import { combineReducers } from 'redux'
-import locationReducer from './location'
+import { combineReducers } from 'redux-immutable';
+import { reducer as form } from 'redux-form/immutable';
+import authReducer from '../containers/Auth/reducer'
+import { routerReducer } from 'react-router-redux'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
-    location: locationReducer,
+    route: routerReducer,
+    form,
+    auth: authReducer,
     ...asyncReducers
   })
 }
