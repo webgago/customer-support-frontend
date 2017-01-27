@@ -10,3 +10,13 @@ For example:
 @import './variables/components';
 @import './themes/default';
 */
+
+p a {
+  padding: 0 5px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 840px;
+  }
+}

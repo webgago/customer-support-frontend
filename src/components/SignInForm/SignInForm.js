@@ -5,26 +5,24 @@ import submit from './submit'
 import { Validator } from '../../services/validation'
 import { Link } from 'react-router'
 
-const validate = values => {
+const validation = values => {
   return new Validator(values)
-    .required('email', 'password', 'first_name', 'last_name')
+    .required('email', 'password')
     .email('email')
     .errors
 }
 
-export const SignUpForm = (props) => {
+export const SignInForm = (props) => {
   const {handleSubmit, error, pristine, submitting} = props
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={Input} name="first_name" type="text" label="First Name"/>
-      <Field component={Input} name="last_name" type="text" label="Last Name"/>
       <Field component={Input} name="email" type="email" label="Email"/>
       <Field component={Input} name="password" type="password" label="Password"/>
-      <div>{error && <strong>{error}</strong>}</div>
+      {error && <strong>{error}</strong>}
       <div>
-        <button type="submit" className="btn btn-default" disabled={pristine || submitting}>Sign Up</button>
-        {" "} or <Link to="/login">login</Link>
+        <button type="submit" className="btn btn-default" disabled={pristine || submitting}>Login</button>
+        {" "} or <Link to="/signup">signup</Link>
       </div>
     </form>
   )
@@ -32,6 +30,6 @@ export const SignUpForm = (props) => {
 
 export default reduxForm({
   form: 'signupForm',
-  validate,
+  validate: validation,
   onSubmit: submit
-})(SignUpForm)
+})(SignInForm)

@@ -1,12 +1,15 @@
 import React from 'react'
 import './HomeView.scss'
-import SignUpForm from '../../../components/SignUpForm'
+import { Link } from 'react-router'
 
 export const HomeView = () => (
   <div>
     <h1>Welcome to Customer Support ticketing system</h1>
-    <p>Please login or sign up</p>
-    <SignUpForm/>
+    <p>
+      Please
+      <Link to="/login">login</Link>or<Link to="/signup">sign up</Link>
+      to access customer support
+    </p>
   </div>
 )
 

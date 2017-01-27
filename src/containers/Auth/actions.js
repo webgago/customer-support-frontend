@@ -1,4 +1,6 @@
-import * as api from '../../api'
+import * as api from '../../services/api'
+import { selectNextPathname, selectRoute, selectRouteDomain } from '../../containers/App/selectors';
+import { push } from 'react-router-redux';
 
 /*
  *
@@ -28,12 +30,15 @@ export function requestLogin(email, password, meta) {
 }
 
 export function login(email, password, meta) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(requestLogin(email, password, meta))
 
     return api.login({email, password})
       .then(({token, user}) => {
         dispatch(loginSuccess(token, user))
+        const nextPathname = selectNextPathname()(getState());
+        dispatch(push(nextPathname || '/'));
+
         meta.resolve(user)
       })
       .catch(({errors, response}) => {
@@ -71,13 +76,15 @@ export function loginFailed(errors) {
 export function logout(nextPathname) {
   localStorage.removeItem('userToken');
   localStorage.removeItem('user');
-
-  return {
-    type: LOGOUT,
-    payload: {
-      nextPathname,
-    },
-  };
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT,
+      payload: {
+        nextPathname,
+      },
+    })
+    dispatch(push('/'))
+  }
 }
 
 export function unauthorized() {

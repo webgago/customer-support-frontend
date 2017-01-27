@@ -1,5 +1,6 @@
 import { injectReducer } from '../../store/reducers'
 import { selectCurrentUser } from 'containers/Auth/selectors';
+import Notifications from 'react-notification-system-redux';
 
 const isLoggedIn = (store) => !!selectCurrentUser()(store.getState());
 
@@ -11,7 +12,7 @@ const shouldBeNotAuthorized = (store, nextState, replace) => {
 
 const shouldBeAuthorized = (store, nextState, replace) => {
   if (!isLoggedIn(store)) {
-    store.dispatch(changeError('You should be authorized to access this page!', true));
+    store.dispatch(Notifications.error({title: 'You should be authorized to access this page!'}))
     replace({
       pathname: '/',
       query: { nextPathname: nextState.location.pathname },

@@ -3,11 +3,13 @@ import { browserHistory, Router } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux'
 import { selectLocationState } from './selectors';
+import {IntlProvider, FormattedMessage} from 'react-intl';
 
 class AppContainer extends Component {
   static propTypes = {
     routes : PropTypes.object.isRequired,
-    store  : PropTypes.object.isRequired
+    store  : PropTypes.object.isRequired,
+    notifications: PropTypes.array
   }
 
   shouldComponentUpdate () {
@@ -23,11 +25,13 @@ class AppContainer extends Component {
     return (
       <Provider store={store}>
         <div style={{ height: '100%' }}>
-          <Router history={history} children={routes} />
+          <IntlProvider locale="en">
+            <Router history={history} children={routes}/>
+          </IntlProvider>
         </div>
       </Provider>
     )
   }
 }
 
-export default AppContainer
+export default AppContainer;

@@ -21,9 +21,32 @@ const selectError = () => createSelector(
   (globalState) => globalState.get('error')
 );
 
-const selectRepos = () => createSelector(
-  selectGlobal(),
-  (globalState) => globalState.getIn(['userData', 'repositories'])
+/**
+ * Direct selector to the route state domain
+ */
+const selectRouteDomain = () => (state) => state.get('routing');
+
+/**
+ * Other specific selectors
+ */
+
+
+const selectRoute = () => createSelector(
+  selectRouteDomain(),
+  (routeState) => (routeState.locationBeforeTransitions)
+);
+
+const selectNextPathname = () => createSelector(
+  selectRoute(),
+  (route) => {
+    const { query, state } = route;
+    return (query || state || {}).nextPathname;
+  }
+);
+
+const selectCurrentPathname = () => createSelector(
+  selectRoute(),
+  (route) => route.pathname
 );
 
 const selectLocationState = () => {
@@ -31,7 +54,7 @@ const selectLocationState = () => {
   let prevRoutingStateJS;
 
   return (state) => {
-    const routingState = fromJS(state.get('route'));
+    const routingState = fromJS(state.get('routing'));
 
     if (!routingState.equals(prevRoutingState)) {
       prevRoutingState = routingState;
@@ -47,6 +70,9 @@ export {
   selectCurrentUser,
   selectLoading,
   selectError,
-  selectRepos,
   selectLocationState,
+  selectRoute,
+  selectRouteDomain,
+  selectNextPathname,
+  selectCurrentPathname,
 };

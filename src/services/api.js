@@ -29,9 +29,17 @@ function request(url, method, body, headers={}) {
             reject({ ...json, response });
           }
         })
-        .catch(() => reject({ errors: { base: 'Something went wrong' }, response }));
+        .catch(() => {
+          if(response.status == 201 || response.status == 204) {
+            resolve()
+          }
+          if(response.status == 401){
+            reject({unauthorized: true})
+          }
+          reject({ errors: { base: ['Wrong json'] }, response })
+        });
     })
-    .catch(() => reject({ errors: { base: 'Something went wrong' }}));
+    .catch(() => reject({ errors: { base: ['Something went wrong'] }}));
   })
 }
 
@@ -47,4 +55,18 @@ export function login(body) {
   return post('/login', body).then((json) => {
     return { token: json.jwt, user: jwtDecode(json.jwt) }
   })
+}
+
+export function signup({firstName, lastName, email, password}) {
+  let params = {first_name: firstName, last_name: lastName, email, password}
+
+  return post('/signup', params).then(() => params)
+}
+
+export function tickets() {
+  return get('/support_requests')
+}
+
+export function ticket(id) {
+  return get(`/support_requests/${id}`)
 }
