@@ -1,6 +1,6 @@
 import * as api from '../../services/api'
-import { selectNextPathname } from '../../containers/App/selectors';
-import { push } from 'react-router-redux';
+import { selectNextPathname } from '../../containers/App/selectors'
+import { push } from 'react-router-redux'
 
 /*
  *
@@ -11,31 +11,31 @@ import { push } from 'react-router-redux';
 import {
   SIGNUP,
   SIGNUP_SUCCESS,
-  SIGNUP_FAILED,
-} from './constants';
+  SIGNUP_FAILED
+} from './constants'
 
-export function requestSignup(firstName, lastName, email, password, meta) {
+export function requestSignup (firstName, lastName, email, password, meta) {
   return {
     type: SIGNUP,
     payload: {
       firstName,
       lastName,
       email,
-      password,
+      password
     },
-    meta,
-  };
+    meta
+  }
 }
 
-export function signup(firstName, lastName, email, password, meta) {
+export function signup (firstName, lastName, email, password, meta) {
   return (dispatch, getState) => {
     dispatch(requestSignup(firstName, lastName, email, password, meta))
 
-    return api.signup({firstName, lastName, email, password})
-      .then(({user}) => {
+    return api.signup({ firstName, lastName, email, password })
+      .then(({ user }) => {
         dispatch(signupSuccess(user))
-        const nextPathname = selectNextPathname()(getState());
-        dispatch(push(nextPathname || '/'));
+        const nextPathname = selectNextPathname()(getState())
+        dispatch(push(nextPathname || '/'))
         meta.resolve(user)
       })
       .catch(({ errors }) => {
@@ -45,20 +45,20 @@ export function signup(firstName, lastName, email, password, meta) {
   }
 }
 
-export function signupSuccess(user) {
+export function signupSuccess (user) {
   return {
     type: SIGNUP_SUCCESS,
     payload: {
-      user,
-    },
-  };
+      user
+    }
+  }
 }
 
-export function signupFailed(errors) {
+export function signupFailed (errors) {
   return {
     type: SIGNUP_FAILED,
     payload: {
       errors
-    },
-  };
+    }
+  }
 }

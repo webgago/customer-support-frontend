@@ -1,5 +1,5 @@
 export const email = (key, values, errors) => {
-  if (!/^.+@.+\..+$/i.test(values.get(key))){
+  if (!/^.+@.+\..+$/i.test(values.get(key))) {
     return { [key]: 'Invalid email address', ...errors }
   }
   return errors
@@ -18,13 +18,17 @@ export class Validator {
     this.errors = {}
   }
 
-  email(...keys) {
-    keys.forEach((key) => this.errors = email(key, this.values, this.errors))
+  email (...keys) {
+    keys.forEach((key) => {
+      this.errors = email(key, this.values, this.errors)
+    })
     return this
   }
 
-  required(...keys) {
-    keys.forEach((key) => this.errors = required(key, this.values, this.errors))
+  required (...keys) {
+    keys.forEach((key) => {
+      this.errors = required(key, this.values, this.errors)
+    })
     return this
   }
 }

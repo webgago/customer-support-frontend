@@ -4,9 +4,9 @@ import { FormattedRelative } from 'react-intl'
 import TicketsSearchForm from '../../../components/TicketsSearchForm'
 import './Tickets.scss'
 
-const Ticket = ({ticket}) => {
+const Ticket = ({ ticket }) => {
   const status = () => {
-    if(ticket.new) {
+    if (ticket.new) {
       return 'label label-warning'
     } else if (ticket.closed) {
       return 'label label-success'
@@ -22,7 +22,7 @@ const Ticket = ({ticket}) => {
         <span className={status()}>{ticket.status}</span>
       </td>
       <td>
-        <FormattedRelative value={ticket.updated_at}/>
+        <FormattedRelative value={ticket.updated_at} />
       </td>
       <td>
         {ticket.user.full_name}
@@ -31,55 +31,61 @@ const Ticket = ({ticket}) => {
   )
 }
 
+Ticket.propTypes = {
+  ticket: React.PropTypes.object.isRequired
+}
+
 export class Tickets extends React.Component {
   static propTypes = {
     tickets: React.PropTypes.array.isRequired,
     loadTickets: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    increment: React.PropTypes.func.isRequired,
+    location: React.PropTypes.object.isRequired
   }
 
-  componentDidMount() {
-    this.props.loadTickets();
+  componentDidMount () {
+    this.props.loadTickets()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.location.query != this.props.location.query)
-      this.props.loadTickets(nextProps.location.query);
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.location.query !== this.props.location.query) {
+      this.props.loadTickets(nextProps.location.query)
+    }
   }
 
-  render() {
-    let { tickets } = this.props;
+  render () {
+    let { tickets } = this.props
     let q = this.props.location.query.q
 
     return (
-      <div className="tickets">
-        <TicketsSearchForm/>
-        {tickets.length != 0 && <div>
+      <div className='tickets'>
+        <TicketsSearchForm />
+        {tickets.length !== 0 && <div>
           <h2>
             Tickets
-            <small className="pull-right">
-              <a href="/report" className="btn btn-sm btn-default">Print</a>
+            <small className='pull-right'>
+              <a href='/report' className='btn btn-sm btn-default'>Print</a>
             </small>
           </h2>
-          <table className="table table-bordered">
-          <thead>
-          <tr className="active">
-            <td>Title</td>
-            <td>Status</td>
-            <td>Updated at</td>
-            <td>Author</td>
-          </tr>
-          </thead>
-          <tbody>
-          {tickets.map((ticket) => (Ticket({ticket})))}
-          </tbody>
+          <table className='table table-bordered'>
+            <thead>
+              <tr className='active'>
+                <td>Title</td>
+                <td>Status</td>
+                <td>Updated at</td>
+                <td>Author</td>
+              </tr>
+            </thead>
+            <tbody>
+              {tickets.map((ticket) => (Ticket({ ticket })))}
+            </tbody>
           </table>
         </div>}
-        {tickets.length == 0 && <div className="jumbotron">
-          {q && <p className="text-center">
+        {tickets.length === 0 && <div className='jumbotron'>
+          {q && <p className='text-center'>
             {`We couldn’t find any tickets matching '${q}'`}
           </p>}
-          {!q && <p className="text-center">
+          {!q && <p className='text-center'>
             No tickets yet
           </p>}
         </div>}

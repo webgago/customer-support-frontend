@@ -17,7 +17,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  report: state.get('report'),
+  report: state.get('report')
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

@@ -1,22 +1,22 @@
 import React from 'react'
-import {IndexLink, Link} from 'react-router'
+import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 
-export const Header = ({currentUser, logout, router}) => {
+export const Header = ({ currentUser, logout, router }) => {
   const activeClass = (path, indexOnly) => router.isActive(path, indexOnly) ? 'active' : ''
 
-  const isAgent = () => currentUser && currentUser.role != 'customer'
+  const isAgent = () => currentUser && currentUser.role !== 'customer'
 
   return (
-    <nav className="navbar navbar-inverse navbar-fixed-top">
-      <div className="container">
-        <div className="navbar-header">
-          <Link className="navbar-brand" to='/'>
+    <nav className='navbar navbar-inverse navbar-fixed-top'>
+      <div className='container'>
+        <div className='navbar-header'>
+          <Link className='navbar-brand' to='/'>
             Support
           </Link>
         </div>
-        <div className="collapse navbar-collapse">
-          <ul className="nav navbar-nav">
+        <div className='collapse navbar-collapse'>
+          <ul className='nav navbar-nav'>
             {!currentUser && <li className={activeClass('/', true)}>
               <IndexLink to='/'>
                 Home
@@ -33,14 +33,14 @@ export const Header = ({currentUser, logout, router}) => {
               </Link>
             </li>}
           </ul>
-          {currentUser && <ul className="nav navbar-nav navbar-right">
+          {currentUser && <ul className='nav navbar-nav navbar-right'>
             <li>
               <a onClick={logout}>
                 Logout
               </a>
             </li>
           </ul>}
-          {currentUser && <p className="navbar-text navbar-right">
+          {currentUser && <p className='navbar-text navbar-right'>
             Signed in as {currentUser.first_name} {currentUser.last_name}
           </p>}
         </div>
@@ -52,8 +52,7 @@ export const Header = ({currentUser, logout, router}) => {
 Header.propTypes = {
   currentUser: React.PropTypes.object,
   logout: React.PropTypes.func,
-  router: React.PropTypes.object,
+  router: React.PropTypes.object
 }
-
 
 export default Header

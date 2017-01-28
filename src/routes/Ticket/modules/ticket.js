@@ -1,5 +1,5 @@
 import * as api from '../../../services/api'
-import Notifications from 'react-notification-system-redux';
+import Notifications from 'react-notification-system-redux'
 import { push } from 'react-router-redux'
 
 // ------------------------------------
@@ -19,7 +19,7 @@ export const loadTicket = (id) => {
       .catch((error) => {
         if (error instanceof Error) throw error
         else {
-          dispatch(Notifications.error({title: error.errors.base[0]}))
+          dispatch(Notifications.error({ title: error.errors.base[0] }))
           dispatch(push('/tickets'))
         }
       })
@@ -35,7 +35,7 @@ export const reopenTicket = (ticket) => {
       .catch((error) => {
         if (error instanceof Error) throw error
         else {
-          dispatch(Notifications.error({title: error.errors.base[0]}))
+          dispatch(Notifications.error({ title: error.errors.base[0] }))
           dispatch(push('/tickets'))
         }
       })
@@ -51,7 +51,7 @@ export const closeTicket = (ticket) => {
       .catch((error) => {
         if (error instanceof Error) throw error
         else {
-          dispatch(Notifications.error({title: error.errors.base[0]}))
+          dispatch(Notifications.error({ title: error.errors.base[0] }))
           dispatch(push('/tickets'))
         }
       })
@@ -69,21 +69,21 @@ export const actions = {
   loadTicket,
   loadTicketSuccess,
   reopenTicket,
-  closeTicket,
+  closeTicket
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [LOAD_TICKET_SUCCESS]: (state, action) => action.payload,
+  [LOAD_TICKET_SUCCESS]: (state, action) => action.payload
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {user: {}}
-export default function ticketReducer(state = initialState, action) {
+const initialState = { user: {} }
+export default function ticketReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

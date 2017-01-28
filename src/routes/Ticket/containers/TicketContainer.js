@@ -20,7 +20,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = createStructuredSelector({
   ticket: (state) => state.get('ticket'),
-  currentUser: selectCurrentUser(),
+  currentUser: selectCurrentUser()
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

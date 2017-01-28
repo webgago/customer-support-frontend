@@ -21,7 +21,7 @@ export const createRoutes = (store) => ({
     CounterRoute(store),
     TicketsRoute(store),
     TicketRoute(store),
-    ReportRoute(store),
+    ReportRoute(store)
   ]
 })
 

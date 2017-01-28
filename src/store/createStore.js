@@ -15,7 +15,7 @@ export default (initialState = {}) => {
   // Store Enhancers
   // ======================================================
   const enhancers = [
-    applyMiddleware(...middleware),
+    applyMiddleware(...middleware)
   ]
 
   let composeEnhancers = compose

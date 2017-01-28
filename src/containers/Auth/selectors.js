@@ -1,9 +1,9 @@
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
 
 /**
  * Direct selector to the auth state domain
  */
-const selectAuthDomain = () => (state) => state.get('auth');
+const selectAuthDomain = () => (state) => state.get('auth')
 
 /**
  * Other specific selectors
@@ -12,10 +12,10 @@ const selectAuthDomain = () => (state) => state.get('auth');
 const selectCurrentUser = () => createSelector(
   selectAuthDomain(),
   (authState) => {
-    const user = authState.get('user');
-    return user ? user.toJS() : null;
+    const user = authState.get('user')
+    return user ? user.toJS() : null
   }
-);
+)
 
 /**
  * Default selector used by Auth
@@ -24,10 +24,10 @@ const selectCurrentUser = () => createSelector(
 const selectAuth = () => createSelector(
   selectAuthDomain(),
   (authState) => ({ authState: authState.toJS() })
-);
+)
 
 export {
   selectAuthDomain,
   selectAuth,
-  selectCurrentUser,
-};
+  selectCurrentUser
+}

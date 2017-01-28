@@ -13,19 +13,26 @@ const validation = values => {
 }
 
 export const SignInForm = (props) => {
-  const {handleSubmit, error, pristine, submitting} = props
+  const { handleSubmit, error, pristine, submitting } = props
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={Input} name="email" type="email" label="Email"/>
-      <Field component={Input} name="password" type="password" label="Password"/>
+      <Field component={Input} name='email' type='email' label='Email' />
+      <Field component={Input} name='password' type='password' label='Password' />
       {error && <strong>{error}</strong>}
       <div>
-        <button type="submit" className="btn btn-default" disabled={pristine || submitting}>Login</button>
-        {" "} or <Link to="/signup">signup</Link>
+        <button type='submit' className='btn btn-default' disabled={pristine || submitting}>Login</button>
+        {' '} or <Link to='/signup'>signup</Link>
       </div>
     </form>
   )
+}
+
+SignInForm.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
+  pristine: React.PropTypes.bool.isRequired,
+  submitting: React.PropTypes.bool.isRequired,
+  error: React.PropTypes.string.isRequired
 }
 
 export default reduxForm({

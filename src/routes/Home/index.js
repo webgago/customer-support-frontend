@@ -6,7 +6,7 @@ export default (store) => ({
   component: HomeView,
   onEnter: (nextState, replace) => {
     if (isLoggedIn(store)) {
-      replace('/tickets');
+      replace('/tickets')
     }
   }
 })

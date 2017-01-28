@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { browserHistory, Router } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux';
+import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
-import { selectLocationState } from './selectors';
-import {IntlProvider, FormattedMessage} from 'react-intl';
+import { selectLocationState } from './selectors'
+import { IntlProvider } from 'react-intl'
 
 class AppContainer extends Component {
   static propTypes = {
@@ -19,14 +19,14 @@ class AppContainer extends Component {
   render () {
     const { routes, store } = this.props
     const history = syncHistoryWithStore(browserHistory, store, {
-      selectLocationState: selectLocationState(),
-    });
+      selectLocationState: selectLocationState()
+    })
 
     return (
       <Provider store={store}>
         <div style={{ height: '100%' }}>
-          <IntlProvider locale="en">
-            <Router history={history} children={routes}/>
+          <IntlProvider locale='en'>
+            <Router history={history} children={routes} />
           </IntlProvider>
         </div>
       </Provider>
@@ -34,4 +34,4 @@ class AppContainer extends Component {
   }
 }
 
-export default AppContainer;
+export default AppContainer

@@ -1,5 +1,5 @@
 import * as api from '../../../services/api'
-import Notifications from 'react-notification-system-redux';
+import Notifications from 'react-notification-system-redux'
 
 // ------------------------------------
 // Constants
@@ -18,7 +18,7 @@ export const loadTickets = (params) => {
       })
       .catch((error) => {
         if (error instanceof Error) throw error
-        dispatch(Notifications.error({title: error.errors.base[0]}))
+        dispatch(Notifications.error({ title: error.errors.base[0] }))
       })
   }
 }
@@ -45,7 +45,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = []
-export default function ticketsReducer(state = initialState, action) {
+export default function ticketsReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state
