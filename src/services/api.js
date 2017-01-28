@@ -68,25 +68,29 @@ export function signup({firstName, lastName, email, password}) {
 }
 
 export function tickets() {
-  return get('/support_requests')
+  return get('/tickets')
 }
 
 export function ticket(id) {
-  return get(`/support_requests/${id}`)
+  return get(`/tickets/${id}`)
 }
 
 export function replyToTicket(id, params) {
-  return post(`/support_requests/${id}/reply`, params)
+  return post(`/tickets/${id}/reply`, params)
 }
 
 export function reopenTicket(id) {
-  return put(`/support_requests/${id}/reopen`)
+  return put(`/tickets/${id}/reopen`)
 }
 
 export function closeTicket(id) {
-  return put(`/support_requests/${id}/close`)
+  return put(`/tickets/${id}/close`)
 }
 
 export function searchTickets(params) {
-  return post('/support_requests', params)
+  return post('/tickets/search', params)
+}
+
+export function loadReport(params) {
+  return get('/report', params)
 }
