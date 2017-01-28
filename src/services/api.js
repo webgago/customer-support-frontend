@@ -51,6 +51,10 @@ function post(url, body, headers={}) {
   return request(url, 'POST', body, headers)
 }
 
+function put(url, body, headers={}) {
+  return request(url, 'PUT', body, headers)
+}
+
 export function login(body) {
   return post('/login', body).then((json) => {
     return { token: json.jwt, user: jwtDecode(json.jwt) }
@@ -69,4 +73,20 @@ export function tickets() {
 
 export function ticket(id) {
   return get(`/support_requests/${id}`)
+}
+
+export function replyToTicket(id, params) {
+  return post(`/support_requests/${id}/reply`, params)
+}
+
+export function reopenTicket(id) {
+  return put(`/support_requests/${id}/reopen`)
+}
+
+export function closeTicket(id) {
+  return put(`/support_requests/${id}/close`)
+}
+
+export function searchTickets(params) {
+  return post('/support_requests', params)
 }

@@ -5,6 +5,8 @@ import './Header.scss'
 export const Header = ({currentUser, logout, router}) => {
   const activeClass = (path, indexOnly) => router.isActive(path, indexOnly) ? 'active' : ''
 
+  const isAgent = () => currentUser && currentUser.role != 'customer'
+
   return (
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container">
@@ -20,14 +22,14 @@ export const Header = ({currentUser, logout, router}) => {
                 Home
               </IndexLink>
             </li>}
-            <li className={activeClass('/counter')}>
-              <Link to='/counter'>
-                Counter
-              </Link>
-            </li>
             {currentUser && <li className={activeClass('/tickets')}>
               <Link to='/tickets'>
                 Tickets
+              </Link>
+            </li>}
+            {isAgent() && <li className={activeClass('/report')}>
+              <Link to='/report'>
+                Report
               </Link>
             </li>}
           </ul>

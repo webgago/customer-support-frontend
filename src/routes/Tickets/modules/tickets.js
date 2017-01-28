@@ -4,31 +4,17 @@ import Notifications from 'react-notification-system-redux';
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
-export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC'
+export const LOAD_TICKETS_SUCCESS = 'LOAD_TICKETS_SUCCESS'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment(value = []) {
-  return {
-    type: COUNTER_INCREMENT,
-    payload: value
-  }
-}
 
-/*  This is a thunk, meaning it is a function that immediately
- returns a function for lazy evaluation. It is incredibly useful for
- creating async actions, especially when combined with redux-thunk! */
-
-export const loadTickets = () => {
+export const loadTickets = (params) => {
   return (dispatch) => {
-    return api.tickets()
+    return api.searchTickets(params)
       .then((tickets) => {
-        dispatch({
-          type: COUNTER_DOUBLE_ASYNC,
-          payload: tickets
-        })
+        dispatch(loadTicketsSuccess(tickets))
       })
       .catch((error) => {
         if (error instanceof Error) throw error
@@ -36,18 +22,23 @@ export const loadTickets = () => {
       })
   }
 }
+export const loadTicketsSuccess = (tickets) => {
+  return {
+    type: LOAD_TICKETS_SUCCESS,
+    payload: tickets
+  }
+}
 
 export const actions = {
-  increment,
-  loadTickets
+  loadTickets,
+  loadTicketsSuccess
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [COUNTER_INCREMENT]: (state, action) => action.payload,
-  [COUNTER_DOUBLE_ASYNC]: (state, action) => action.payload
+  [LOAD_TICKETS_SUCCESS]: (state, action) => action.payload
 }
 
 // ------------------------------------

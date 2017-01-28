@@ -1,18 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { FormattedRelative } from 'react-intl'
+import TicketsSearchForm from '../../../components/TicketsSearchForm'
+import './Tickets.scss'
 
 const Ticket = ({ticket}) => {
+  const status = () => {
+    if(ticket.new) {
+      return 'label label-warning'
+    } else if (ticket.closed) {
+      return 'label label-success'
+    }
+    return 'label label-default'
+  }
   return (
     <tr key={ticket.id}>
       <td>
         <Link to={`/tickets/${ticket.id}`}>{ticket.title}</Link>
       </td>
       <td>
+        <span className={status()}>{ticket.status}</span>
+      </td>
+      <td>
         <FormattedRelative value={ticket.updated_at}/>
       </td>
       <td>
-        {`${ticket.user.full_name}`}
+        {ticket.user.full_name}
       </td>
     </tr>
   )
@@ -29,16 +42,30 @@ export class Tickets extends React.Component {
     this.props.loadTickets();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.location.query != this.props.location.query)
+      this.props.loadTickets(nextProps.location.query);
+  }
+
   render() {
     let { tickets } = this.props;
+    let q = this.props.location.query.q
 
     return (
-      <div style={{margin: '0 auto'}}>
-        <h2>Tickets</h2>
-        <table className="table table-bordered">
+      <div className="tickets">
+        <TicketsSearchForm/>
+        {tickets.length != 0 && <div>
+          <h2>
+            Tickets
+            <small className="pull-right">
+              <a href="/report" className="btn btn-sm btn-default">Print</a>
+            </small>
+          </h2>
+          <table className="table table-bordered">
           <thead>
           <tr className="active">
             <td>Title</td>
+            <td>Status</td>
             <td>Updated at</td>
             <td>Author</td>
           </tr>
@@ -46,7 +73,16 @@ export class Tickets extends React.Component {
           <tbody>
           {tickets.map((ticket) => (Ticket({ticket})))}
           </tbody>
-        </table>
+          </table>
+        </div>}
+        {tickets.length == 0 && <div className="jumbotron">
+          {q && <p className="text-center">
+            {`We couldn’t find any tickets matching '${q}'`}
+          </p>}
+          {!q && <p className="text-center">
+            No tickets yet
+          </p>}
+        </div>}
       </div>
     )
   }

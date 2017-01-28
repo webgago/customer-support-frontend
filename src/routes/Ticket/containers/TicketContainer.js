@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { loadTicket } from '../modules/ticket'
+import { selectCurrentUser } from 'containers/Auth/selectors'
+import { createStructuredSelector } from 'reselect'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -16,8 +18,9 @@ const mapDispatchToProps = {
   loadTicket
 }
 
-const mapStateToProps = (state) => ({
-  ticket : state.get('ticket')
+const mapStateToProps = createStructuredSelector({
+  ticket: (state) => state.get('ticket'),
+  currentUser: selectCurrentUser(),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
