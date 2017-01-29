@@ -3,7 +3,7 @@ import './Ticket.scss'
 import { FormattedDate, FormattedRelative } from 'react-intl'
 import ReplyForm from '../../../components/ReplyForm'
 
-const Reply = ({ reply }) => {
+export const Reply = ({ reply }) => {
   return (
     <div className='reply' key={reply.id}>
       <div className='reply__avatar'>

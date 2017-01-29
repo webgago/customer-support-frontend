@@ -32,7 +32,7 @@ export const createRoutes = (store) => ({
       require.ensure([], (require) => {
         cb(null, [
           // Remove imports!
-          require('./Counter').default(store)
+          require('./Tickets').default(store)
         ])
       })
     }

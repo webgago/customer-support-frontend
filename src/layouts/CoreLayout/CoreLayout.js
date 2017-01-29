@@ -10,7 +10,7 @@ import Notifications from 'react-notification-system-redux'
 
 export const CoreLayout = ({ children, currentUser, logout, notifications, goTo, router }) => (
   <div>
-    <Header currentUser={currentUser} logout={logout} goTo={goTo} router={router} />
+    <Header currentUser={currentUser} logout={logout} router={router} />
     <div className='container body core-layout__viewport'>
       {children}
     </div>

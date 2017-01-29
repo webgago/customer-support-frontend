@@ -4,24 +4,34 @@ import Notifications from 'react-notification-system-redux'
 // ------------------------------------
 // Constants
 // ------------------------------------
+export const LOAD_TICKETS_REQUEST = 'LOAD_TICKETS_REQUEST'
 export const LOAD_TICKETS_SUCCESS = 'LOAD_TICKETS_SUCCESS'
+export const LOAD_TICKETS_FAILURE = 'LOAD_TICKETS_FAILURE'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export const loadTickets = (params) => {
+export const loadTickets = (params = {}) => {
   return (dispatch) => {
+    dispatch(loadTicketsRequest())
     return api.searchTickets(params)
       .then((tickets) => {
         dispatch(loadTicketsSuccess(tickets))
       })
       .catch((error) => {
-        if (error instanceof Error) throw error
+        dispatch(loadTicketsFailure(error))
         dispatch(Notifications.error({ title: error.errors.base[0] }))
       })
   }
 }
+
+export const loadTicketsRequest = () => {
+  return {
+    type: LOAD_TICKETS_REQUEST
+  }
+}
+
 export const loadTicketsSuccess = (tickets) => {
   return {
     type: LOAD_TICKETS_SUCCESS,
@@ -29,9 +39,18 @@ export const loadTicketsSuccess = (tickets) => {
   }
 }
 
+export const loadTicketsFailure = (ex) => {
+  return {
+    type: LOAD_TICKETS_SUCCESS,
+    ex
+  }
+}
+
 export const actions = {
   loadTickets,
-  loadTicketsSuccess
+  loadTicketsRequest,
+  loadTicketsSuccess,
+  loadTicketsFailure
 }
 
 // ------------------------------------
@@ -45,6 +64,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = []
+
 export default function ticketsReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

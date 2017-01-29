@@ -1172,7 +1172,7 @@ chai-enzyme@^0.6.1:
     html "^1.0.0"
     react-element-to-jsx-string "^5.0.0"
 
-chai@^3.4.1:
+"chai@>=1.9.2 <4.0.0", chai@^3.4.1:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/chai/-/chai-3.5.0.tgz#4d02637b067fe958bdbfdd3a40ec56fef7373247"
   dependencies:
@@ -1683,7 +1683,7 @@ deep-eql@^0.1.3:
   dependencies:
     type-detect "0.1.1"
 
-deep-equal@^1.0.1:
+deep-equal@^1.0.0, deep-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
@@ -2322,6 +2322,14 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
+fetch-mock@^5.8.1:
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-5.8.1.tgz#bfcb8ab7fe2fa33b8e5c17f17228081324af9481"
+  dependencies:
+    glob-to-regexp "^0.3.0"
+    node-fetch "^1.3.3"
+    path-to-regexp "^1.7.0"
+
 figures@^1.3.5:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -2578,6 +2586,10 @@ glob-parent@^2.0.0:
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-2.0.0.tgz#81383d72db054fcccf5336daa902f182f6edbb28"
   dependencies:
     is-glob "^2.0.0"
+
+glob-to-regexp@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
 
 glob@7.0.5:
   version "7.0.5"
@@ -2986,6 +2998,10 @@ intl-relativeformat@^1.3.0:
   dependencies:
     intl-messageformat "1.3.0"
 
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+
 invariant@^2.0.0, invariant@^2.1.1, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
@@ -3304,7 +3320,7 @@ json-stable-stringify@^1.0.0, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -3655,6 +3671,10 @@ lodash@~4.16.4:
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.6.tgz#d22c9ac660288f3843e16ba7d2b5d06cca27d777"
 
+lodash@~4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.9.0.tgz#4c20d742f03ce85dc700e0dd7ab9bcab85e6fc14"
+
 log4js@^0.6.31:
   version "0.6.38"
   resolved "https://registry.yarnpkg.com/log4js/-/log4js-0.6.38.tgz#2c494116695d6fb25480943d3fc872e662a522fd"
@@ -3892,7 +3912,20 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-fetch@^1.0.1:
+nock@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-9.0.2.tgz#f6a5f4a8d560d61f48b5ad428ccff8dc9b62701e"
+  dependencies:
+    chai ">=1.9.2 <4.0.0"
+    debug "^2.2.0"
+    deep-equal "^1.0.0"
+    json-stringify-safe "^5.0.1"
+    lodash "~4.9.0"
+    mkdirp "^0.5.0"
+    propagate "0.4.0"
+    qs "^6.0.2"
+
+node-fetch@^1.0.1, node-fetch@^1.3.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
   dependencies:
@@ -4288,6 +4321,12 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
 
+path-to-regexp@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
+  dependencies:
+    isarray "0.0.1"
+
 path-type@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-1.1.0.tgz#59c44f7ee491da704da415da5a4070ba4f8fe441"
@@ -4656,6 +4695,10 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+propagate@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/propagate/-/propagate-0.4.0.tgz#f3fcca0a6fe06736a7ba572966069617c130b481"
+
 proxy-addr@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-1.1.2.tgz#b4cc5f22610d9535824c123aef9d3cf73c40ba37"
@@ -4693,7 +4736,7 @@ qjobs@^1.1.4:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/qjobs/-/qjobs-1.1.5.tgz#659de9f2cf8dcc27a1481276f205377272382e73"
 
-qs@6.2.0, qs@~6.2.0:
+qs@6.2.0, qs@^6.0.2, qs@~6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.0.tgz#3b7848c03c2dece69a9522b0fae8c4126d745f3b"
 
@@ -4979,6 +5022,10 @@ redux-immutable@^3.0.10:
   dependencies:
     flow-runtime "0.0.6"
     immutable "^3.8.1"
+
+redux-mock-store@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.1.tgz#630c0e2642927d1417c844d935266b501f2fc231"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

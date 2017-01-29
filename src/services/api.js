@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+require('isomorphic-fetch')
 import jwtDecode from 'jwt-decode'
 
 const API_URL = 'http://localhost:3001'

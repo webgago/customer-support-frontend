@@ -4,7 +4,7 @@ import { FormattedRelative } from 'react-intl'
 import TicketsSearchForm from '../../../components/TicketsSearchForm'
 import './Tickets.scss'
 
-const Ticket = ({ ticket }) => {
+export const Ticket = ({ ticket }) => {
   const status = () => {
     if (ticket.new) {
       return 'label label-warning'
@@ -39,7 +39,6 @@ export class Tickets extends React.Component {
   static propTypes = {
     tickets: React.PropTypes.array.isRequired,
     loadTickets: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired,
     location: React.PropTypes.object.isRequired
   }
 

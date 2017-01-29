@@ -13,13 +13,18 @@ const __TEST__ = project.globals.__TEST__
 debug('Creating configuration.')
 const webpackConfig = {
   name    : 'client',
-  target  : 'web',
+  target  : 'node',
   devtool : project.compiler_devtool,
   resolve : {
     root       : project.paths.client(),
     extensions : ['', '.js', '.jsx', '.json']
   },
-  module : {}
+  module : {},
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 }
 // ------------------------------------
 // Entry Points
