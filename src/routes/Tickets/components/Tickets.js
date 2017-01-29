@@ -4,7 +4,9 @@ import { FormattedRelative } from 'react-intl'
 import TicketsSearchForm from '../../../components/TicketsSearchForm'
 import './Tickets.scss'
 
-export const Ticket = ({ ticket }) => {
+export const Ticket = ({ ticket, deleteTicket, isAdmin }) => {
+  const destroy = id => () => deleteTicket(id)
+
   const status = () => {
     if (ticket.new) {
       return 'label label-warning'
@@ -27,19 +29,30 @@ export const Ticket = ({ ticket }) => {
       <td>
         {ticket.user.full_name}
       </td>
+      {isAdmin && <td>
+        <button className='btn btn-danger' onClick={destroy(ticket.id)}>Delete</button>
+      </td>}
     </tr>
   )
 }
 
 Ticket.propTypes = {
-  ticket: React.PropTypes.object.isRequired
+  ticket: React.PropTypes.object.isRequired,
+  deleteTicket: React.PropTypes.func.isRequired,
+  isAdmin: React.PropTypes.bool.isRequired
 }
 
 export class Tickets extends React.Component {
   static propTypes = {
     tickets: React.PropTypes.array.isRequired,
     loadTickets: React.PropTypes.func.isRequired,
+    deleteTicket: React.PropTypes.func.isRequired,
+    currentUser: React.PropTypes.object.isRequired,
     location: React.PropTypes.object.isRequired
+  }
+
+  isAdmin () {
+    return this.props.currentUser.role === 'admin'
   }
 
   componentDidMount () {
@@ -53,7 +66,7 @@ export class Tickets extends React.Component {
   }
 
   render () {
-    let { tickets } = this.props
+    let { tickets, deleteTicket } = this.props
     let q = this.props.location.query.q
 
     return (
@@ -73,10 +86,11 @@ export class Tickets extends React.Component {
                 <td>Status</td>
                 <td>Updated at</td>
                 <td>Author</td>
+                {this.isAdmin() && <td>Actions</td>}
               </tr>
             </thead>
             <tbody>
-              {tickets.map((ticket) => (Ticket({ ticket })))}
+              {tickets.map((ticket) => (Ticket({ ticket, deleteTicket, isAdmin: this.isAdmin() })))}
             </tbody>
           </table>
         </div>}

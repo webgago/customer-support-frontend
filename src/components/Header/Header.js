@@ -6,6 +6,7 @@ export const Header = ({ currentUser, logout, router }) => {
   const activeClass = (path, indexOnly) => router.isActive(path, indexOnly) ? 'active' : ''
 
   const isAgent = () => currentUser && currentUser.role !== 'customer'
+  const isAdmin = () => currentUser && currentUser.role === 'admin'
 
   return (
     <nav className='navbar navbar-inverse navbar-fixed-top'>
@@ -25,6 +26,11 @@ export const Header = ({ currentUser, logout, router }) => {
             {currentUser && <li className={activeClass('/tickets')}>
               <Link to='/tickets'>
                 Tickets
+              </Link>
+            </li>}
+            {isAdmin() && <li className={activeClass('/users')}>
+              <Link to='/users'>
+                Users
               </Link>
             </li>}
             {isAgent() && <li className={activeClass('/report')}>

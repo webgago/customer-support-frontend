@@ -6,6 +6,7 @@ import SignupRoute from './Signup'
 import TicketsRoute from './Tickets'
 import TicketRoute from './Ticket'
 import ReportRoute from './Report'
+import UsersRoute from './Users'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -19,6 +20,7 @@ export const createRoutes = (store) => ({
     SignupRoute(store),
     TicketsRoute(store),
     TicketRoute(store),
+    UsersRoute(store),
     ReportRoute(store)
   ]
 })

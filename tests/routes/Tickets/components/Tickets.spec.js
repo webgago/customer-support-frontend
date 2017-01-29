@@ -12,9 +12,11 @@ describe('(Component) Tickets', () => {
       _spies = {}
       _props = {
         tickets: [],
+        currentUser: { role: 'admin' },
         location: { query: { q: '' } },
         ...bindActionCreators({
-          loadTickets: (_spies.loadTickets = sinon.spy())
+          loadTickets: (_spies.loadTickets = sinon.spy()),
+          deleteTicket: (_spies.loadTickets = sinon.spy())
         }, _spies.dispatch = sinon.spy())
       }
       _wrapper = shallow(<Tickets {..._props} />)
@@ -41,9 +43,11 @@ describe('(Component) Tickets', () => {
       }
       _props = {
         tickets: [ticket],
+        currentUser: { role: 'admin' },
         location: { query: { q: '' } },
         ...bindActionCreators({
-          loadTickets: (_spies.loadTickets = sinon.spy())
+          loadTickets: (_spies.loadTickets = sinon.spy()),
+          deleteTicket: (_spies.loadTickets = sinon.spy())
         }, _spies.dispatch = sinon.spy())
       }
       _wrapper = shallow(<Tickets {..._props} />)
@@ -63,7 +67,7 @@ describe('(Component) Tickets', () => {
 
     it('Should render with an <thead>.', () => {
       expect(_wrapper.find('thead td').map((e) => e.text()))
-        .to.have.members(['Title', 'Status', 'Updated at', 'Author'])
+        .to.have.members(['Title', 'Status', 'Updated at', 'Author', 'Actions'])
     })
 
     it('renders props.tickets', () => {

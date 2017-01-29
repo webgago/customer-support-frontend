@@ -18,3 +18,13 @@ export const shouldBeAuthorized = (store, nextState, replace) => {
     })
   }
 }
+
+export const shouldBeAdmin = (store, nextState, replace) => {
+  shouldBeAuthorized(store, nextState, replace)
+  let user = selectCurrentUser()(store.getState())
+
+  if (user.role !== 'admin') {
+    store.dispatch(Notifications.error({ title: 'Only and Admin can access this page!' }))
+    replace({ pathname: '/' })
+  }
+}

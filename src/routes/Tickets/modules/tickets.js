@@ -9,6 +9,10 @@ export const LOAD_TICKETS_REQUEST = 'LOAD_TICKETS_REQUEST'
 export const LOAD_TICKETS_SUCCESS = 'LOAD_TICKETS_SUCCESS'
 export const LOAD_TICKETS_FAILURE = 'LOAD_TICKETS_FAILURE'
 
+export const DELETE_TICKET_REQUEST = 'DELETE_TICKET_REQUEST'
+export const DELETE_TICKET_SUCCESS = 'DELETE_TICKET_SUCCESS'
+export const DELETE_TICKET_FAILURE = 'DELETE_TICKET_FAILURE'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -22,6 +26,8 @@ export const loadTickets = (params = {}) => {
         dispatch(loadTicketsSuccess(tickets))
       })
       .catch((error) => {
+        /* istanbul ignore next */
+        if (error instanceof Error) throw error
         /* istanbul ignore next */
         if (error.unauthorized) dispatch(unauthorized())
         dispatch(loadTicketsFailure(error))
@@ -50,18 +56,62 @@ export const loadTicketsFailure = (error) => {
   }
 }
 
+export const deleteTicket = (id) => {
+  return (dispatch) => {
+    dispatch(deleteTicketRequest())
+
+    return api.deleteTicket(id)
+      .then(() => {
+        dispatch(deleteTicketSuccess(id))
+      })
+      .catch((error) => {
+        /* istanbul ignore next */
+        if (error instanceof Error) throw error
+        /* istanbul ignore next */
+        if (error.unauthorized) dispatch(unauthorized())
+        dispatch(deleteTicketFailure(error))
+        dispatch(Notifications.error({ title: error.errors.base[0] }))
+      })
+  }
+}
+
+export const deleteTicketRequest = () => {
+  return {
+    type: DELETE_TICKET_REQUEST
+  }
+}
+
+export const deleteTicketSuccess = (id) => {
+  return {
+    type: DELETE_TICKET_SUCCESS,
+    payload: id
+  }
+}
+
+export const deleteTicketFailure = (error) => {
+  return {
+    type: DELETE_TICKET_FAILURE,
+    error
+  }
+}
+
 export const actions = {
   loadTickets,
   loadTicketsRequest,
   loadTicketsSuccess,
-  loadTicketsFailure
+  loadTicketsFailure,
+  deleteTicket,
+  deleteTicketRequest,
+  deleteTicketFailure,
+  deleteTicketSuccess
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [LOAD_TICKETS_SUCCESS]: (state, action) => action.payload
+  [LOAD_TICKETS_SUCCESS]: (state, action) => action.payload,
+  [DELETE_TICKET_SUCCESS]: (state, action) => state.filter((ticket) => ticket.id !== action.payload)
 }
 
 // ------------------------------------

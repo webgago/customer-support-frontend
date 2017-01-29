@@ -35,10 +35,22 @@ describe('(Component) Header', () => {
   describe('when user is an agent', () => {
     beforeEach(() => {
       _props.currentUser.role = 'support_agent'
+      _wrapper = shallow(<Header {..._props} />)
     })
 
-    it('Renders Tickets link', () => {
+    it('Renders Report link', () => {
       expect(_wrapper.contains(<Link to='/report'>Report</Link>)).to.be.true
+    })
+  })
+
+  describe('when user is an admin', () => {
+    beforeEach(() => {
+      _props.currentUser.role = 'admin'
+      _wrapper = shallow(<Header {..._props} />)
+    })
+
+    it('Renders Users link', () => {
+      expect(_wrapper.contains(<Link to='/users'>Users</Link>)).to.be.true
     })
   })
 })

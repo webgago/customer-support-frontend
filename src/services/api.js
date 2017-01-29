@@ -58,6 +58,10 @@ function put (url, body, headers = {}) {
   return request(url, 'PUT', body, headers)
 }
 
+function destroy (url, body, headers = {}) {
+  return request(url, 'DELETE', body, headers)
+}
+
 export function login (body) {
   return post('/login', body).then((json) => {
     return { token: json.jwt, user: jwtDecode(json.jwt) }
@@ -72,6 +76,10 @@ export function signup ({ firstName, lastName, email, password }) {
 
 export function ticket (id) {
   return get(`/tickets/${id}`)
+}
+
+export function deleteTicket (id) {
+  return destroy(`/tickets/${id}`)
 }
 
 export function replyToTicket (id, params = {}) {
@@ -90,6 +98,14 @@ export function searchTickets (params = {}) {
   return post('/tickets/search', params)
 }
 
-export function loadReport (params = {}) {
+export function loadReport () {
   return get('/report')
+}
+
+export function searchUsers (params = {}) {
+  return post('/users/search', params)
+}
+
+export function deleteUser (id) {
+  return destroy(`/users/${id}`)
 }
