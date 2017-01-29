@@ -3,7 +3,7 @@ import { FormattedDate, FormattedRelative } from 'react-intl'
 import './Report.scss'
 
 const Ticket = ({ ticket }) => {
-  const removeAgo = message => <span>{message.replace(' ago', '')}</span>
+  const cleanUp = message => <span>{message.replace(' ago', '').replace('in ', '')}</span>
 
   return (
     <tr key={ticket.id}>
@@ -14,7 +14,8 @@ const Ticket = ({ ticket }) => {
         <FormattedDate value={ticket.closed_at} />
       </td>
       <td>
-        <FormattedRelative value={ticket.closed_at} valueFrom={ticket.created_at} children={removeAgo} />
+        <FormattedRelative value={ticket.closed_at}
+          valueFrom={ticket.created_at} units={'day'} style={'numeric'} children={cleanUp} />
       </td>
       <td>
         {ticket.author}

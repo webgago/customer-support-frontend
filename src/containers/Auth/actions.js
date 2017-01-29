@@ -87,8 +87,9 @@ export function logout (nextPathname) {
   }
 }
 
-export function unauthorized () {
-  return {
-    type: UNAUTHORIZED
+export function unauthorized (nextPathname) {
+  return (dispatch) => {
+    dispatch(logout(nextPathname))
+    dispatch({ type: UNAUTHORIZED })
   }
 }

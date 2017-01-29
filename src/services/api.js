@@ -1,4 +1,4 @@
-require('isomorphic-fetch')
+import 'isomorphic-fetch'
 import jwtDecode from 'jwt-decode'
 
 const API_URL = 'http://localhost:3001'
@@ -34,12 +34,15 @@ function request (url, method, body, headers = {}) {
             resolve()
           }
           if (response.status === 401) {
-            reject({ unauthorized: true })
+            reject({ errors: { base: ['Unauthorized'] }, unauthorized: true })
           }
           reject({ errors: { base: ['Wrong json'] }, response })
         })
     })
-    .catch(() => reject({ errors: { base: ['Something went wrong'] } }))
+    .catch((e) => {
+      reject({ errors: { base: ['Something went wrong'] } })
+      throw e
+    })
   })
 }
 
@@ -67,15 +70,11 @@ export function signup ({ firstName, lastName, email, password }) {
   return post('/signup', params).then(() => params)
 }
 
-export function tickets () {
-  return get('/tickets')
-}
-
 export function ticket (id) {
   return get(`/tickets/${id}`)
 }
 
-export function replyToTicket (id, params) {
+export function replyToTicket (id, params = {}) {
   return post(`/tickets/${id}/reply`, params)
 }
 
@@ -87,10 +86,10 @@ export function closeTicket (id) {
   return put(`/tickets/${id}/close`)
 }
 
-export function searchTickets (params) {
+export function searchTickets (params = {}) {
   return post('/tickets/search', params)
 }
 
-export function loadReport (params) {
-  return get('/report', params)
+export function loadReport (params = {}) {
+  return get('/report')
 }

@@ -14,8 +14,8 @@ const validate = values => {
 export const Form = (props) => {
   const { handleSubmit, pristine, submitting, ticket, dispatch, reopen, close } = props
 
-  const doReopen = () => dispatch(reopenTicket(ticket))
-  const doClose = () => dispatch(closeTicket(ticket))
+  const doReopen = () => dispatch(reopenTicket(ticket.id))
+  const doClose = () => dispatch(closeTicket(ticket.id))
 
   return (
     <form onSubmit={handleSubmit((values) => submit(values, ticket, dispatch))}>

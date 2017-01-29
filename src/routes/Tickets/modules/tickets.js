@@ -1,5 +1,6 @@
 import * as api from '../../../services/api'
 import Notifications from 'react-notification-system-redux'
+import { unauthorized } from 'containers/Auth/actions'
 
 // ------------------------------------
 // Constants
@@ -15,11 +16,14 @@ export const LOAD_TICKETS_FAILURE = 'LOAD_TICKETS_FAILURE'
 export const loadTickets = (params = {}) => {
   return (dispatch) => {
     dispatch(loadTicketsRequest())
+
     return api.searchTickets(params)
       .then((tickets) => {
         dispatch(loadTicketsSuccess(tickets))
       })
       .catch((error) => {
+        /* istanbul ignore next */
+        if (error.unauthorized) dispatch(unauthorized())
         dispatch(loadTicketsFailure(error))
         dispatch(Notifications.error({ title: error.errors.base[0] }))
       })
@@ -39,10 +43,10 @@ export const loadTicketsSuccess = (tickets) => {
   }
 }
 
-export const loadTicketsFailure = (ex) => {
+export const loadTicketsFailure = (error) => {
   return {
-    type: LOAD_TICKETS_SUCCESS,
-    ex
+    type: LOAD_TICKETS_FAILURE,
+    error
   }
 }
 

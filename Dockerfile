@@ -1,10 +1,20 @@
-FROM node:6.9
+FROM node:boron
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Create app directory
+RUN mkdir -p /app
+WORKDIR /app
 
-COPY package.json /usr/src/app/
+# Install app dependencies
+COPY package.json /app/
 RUN npm install
 
-COPY . /usr/src/app
-RUN npm run deploy:dev
+# Bundle app source
+COPY . /app
+
+RUN npm run deploy:prod
+
+ENV NODE_ENV=production
+ENV PORT=4000
+
+EXPOSE 4000
+CMD [ "npm", "start" ]

@@ -1,5 +1,6 @@
 import * as api from '../../../services/api'
 import Notifications from 'react-notification-system-redux'
+import { unauthorized } from 'containers/Auth/actions'
 
 // ------------------------------------
 // Constants
@@ -17,6 +18,7 @@ export const loadReport = () => {
         dispatch(loadReportSuccess(report))
       })
       .catch((error) => {
+        if (error.unauthorized) dispatch(unauthorized())
         if (error instanceof Error) throw error
         dispatch(Notifications.error({ title: error.errors.base[0] }))
       })

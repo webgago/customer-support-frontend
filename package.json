@@ -133,6 +133,7 @@
     "cheerio": "^0.22.0",
     "codecov": "^1.0.1",
     "enzyme": "^2.0.0",
+    "es6-promise": "^4.0.5",
     "eslint": "^3.0.1",
     "eslint-config-standard": "^6.0.0",
     "eslint-config-standard-react": "^4.0.0",

@@ -32,7 +32,7 @@ SignInForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
   pristine: React.PropTypes.bool.isRequired,
   submitting: React.PropTypes.bool.isRequired,
-  error: React.PropTypes.string.isRequired
+  error: React.PropTypes.string
 }
 
 export default reduxForm({

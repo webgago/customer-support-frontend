@@ -41,7 +41,7 @@ export const Header = ({ currentUser, logout, router }) => {
             </li>
           </ul>}
           {currentUser && <p className='navbar-text navbar-right'>
-            Signed in as {currentUser.first_name} {currentUser.last_name}
+            Signed in as {currentUser.full_name}
           </p>}
         </div>
       </div>
