@@ -10,9 +10,9 @@ function submit (values, dispatch) {
     dispatch(Notifications.success({ title: 'You successfully logged in!' }))
     return user
   })
-  .catch((errors) => {
+  .catch(({ errors }) => {
     if (errors) {
-      throw new SubmissionError({ _error: errors.base && errors.base[0] })
+      throw new SubmissionError({ ...errors })
     }
   })
 }

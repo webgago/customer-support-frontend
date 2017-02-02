@@ -67,7 +67,7 @@ describe('(Component) Tickets', () => {
 
     it('Should render with an <thead>.', () => {
       expect(_wrapper.find('thead td').map((e) => e.text()))
-        .to.have.members(['Title', 'Status', 'Updated at', 'Author', 'Actions'])
+        .to.have.members(['Title', 'Status', 'Updated', 'Author', 'Actions'])
     })
 
     it('renders props.tickets', () => {

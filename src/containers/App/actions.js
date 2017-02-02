@@ -32,15 +32,15 @@ export function signup (firstName, lastName, email, password, meta) {
     dispatch(requestSignup(firstName, lastName, email, password, meta))
 
     return api.signup({ firstName, lastName, email, password })
-      .then(({ user }) => {
-        dispatch(signupSuccess(user))
+      .then(() => {
+        dispatch(signupSuccess({ firstName, lastName, email, password }))
         const nextPathname = selectNextPathname()(getState())
         dispatch(push(nextPathname || '/'))
-        meta.resolve(user)
+        meta.resolve({ firstName, lastName, email, password })
       })
       .catch(({ errors }) => {
         dispatch(signupFailed(errors))
-        meta.reject(errors)
+        meta.reject({ errors })
       })
   }
 }

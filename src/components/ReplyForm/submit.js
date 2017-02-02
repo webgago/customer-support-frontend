@@ -12,9 +12,9 @@ function submit (values, ticket, dispatch) {
         dispatch(goBack())
       }
     })
-    .catch((errors) => {
+    .catch(({ errors }) => {
       if (errors) {
-        throw new SubmissionError({ _error: errors.base && errors.base[0], ...errors })
+        throw new SubmissionError({ ...errors })
       }
     })
 }

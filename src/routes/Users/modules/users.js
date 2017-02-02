@@ -31,7 +31,7 @@ export const loadUsers = (params = {}) => {
         /* istanbul ignore next */
         if (error.unauthorized) dispatch(unauthorized())
         dispatch(loadUsersFailure(error))
-        dispatch(Notifications.error({ title: error.errors.base[0] }))
+        dispatch(Notifications.error({ title: error.errors._error }))
       })
   }
 }
@@ -50,7 +50,7 @@ export const deleteUser = (id) => {
         /* istanbul ignore next */
         if (error.unauthorized) dispatch(unauthorized())
         dispatch(deleteUserFailure(error))
-        dispatch(Notifications.error({ title: error.errors.base[0] }))
+        dispatch(Notifications.error({ title: error.errors._error }))
       })
   }
 }

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { selectCurrentUser } from 'containers/Auth/selectors'
 import { createStructuredSelector } from 'reselect'
-import { loadTickets, deleteTicket } from '../modules/tickets'
+import { loadTickets, deleteTicket, showForm, hideForm } from '../modules/tickets'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -16,7 +16,9 @@ import Tickets from '../components/Tickets'
 
 const mapDispatchToProps = {
   loadTickets,
-  deleteTicket
+  deleteTicket,
+  showForm,
+  hideForm
 }
 
 const mapStateToProps = createStructuredSelector({

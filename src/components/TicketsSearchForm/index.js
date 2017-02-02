@@ -21,8 +21,8 @@ export const Form = (props) => {
             <option value='closed'>closed</option>
           </Field>
         </div>
-        <div className='col-md-2'>
-          <button type='submit' className='btn btn-success' disabled={submitting}>Find</button>
+        <div className='col-md-2 no-print'>
+          <button type='submit' className='btn btn-success pull-right' disabled={submitting}>Find</button>
         </div>
       </div>
     </form>

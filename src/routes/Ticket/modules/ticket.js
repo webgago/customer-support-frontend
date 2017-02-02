@@ -16,7 +16,7 @@ const catchError = dispatch => (error) => {
   /* istanbul ignore next */
   if (error.unauthorized) dispatch(unauthorized())
   dispatch(loadTicketFailure(error))
-  dispatch(Notifications.error({ title: error.errors.base[0] }))
+  dispatch(Notifications.error({ title: error.errors._error }))
   dispatch(push('/tickets'))
 }
 

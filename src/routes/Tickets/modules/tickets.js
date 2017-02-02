@@ -13,6 +13,8 @@ export const DELETE_TICKET_REQUEST = 'DELETE_TICKET_REQUEST'
 export const DELETE_TICKET_SUCCESS = 'DELETE_TICKET_SUCCESS'
 export const DELETE_TICKET_FAILURE = 'DELETE_TICKET_FAILURE'
 
+export const ADD_TICKET = 'ADD_TICKET'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -31,7 +33,7 @@ export const loadTickets = (params = {}) => {
         /* istanbul ignore next */
         if (error.unauthorized) dispatch(unauthorized())
         dispatch(loadTicketsFailure(error))
-        dispatch(Notifications.error({ title: error.errors.base[0] }))
+        dispatch(Notifications.error({ title: error.errors._error }))
       })
   }
 }
@@ -70,7 +72,7 @@ export const deleteTicket = (id) => {
         /* istanbul ignore next */
         if (error.unauthorized) dispatch(unauthorized())
         dispatch(deleteTicketFailure(error))
-        dispatch(Notifications.error({ title: error.errors.base[0] }))
+        dispatch(Notifications.error({ title: error.errors._error }))
       })
   }
 }
@@ -95,6 +97,13 @@ export const deleteTicketFailure = (error) => {
   }
 }
 
+export const addTicket = (ticket) => {
+  return {
+    type: ADD_TICKET,
+    payload: ticket
+  }
+}
+
 export const actions = {
   loadTickets,
   loadTicketsRequest,
@@ -103,7 +112,8 @@ export const actions = {
   deleteTicket,
   deleteTicketRequest,
   deleteTicketFailure,
-  deleteTicketSuccess
+  deleteTicketSuccess,
+  addTicket
 }
 
 // ------------------------------------
@@ -111,7 +121,8 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [LOAD_TICKETS_SUCCESS]: (state, action) => action.payload,
-  [DELETE_TICKET_SUCCESS]: (state, action) => state.filter((ticket) => ticket.id !== action.payload)
+  [DELETE_TICKET_SUCCESS]: (state, action) => state.filter((ticket) => ticket.id !== action.payload),
+  [ADD_TICKET]: (state, action) => [action.payload, ...state]
 }
 
 // ------------------------------------

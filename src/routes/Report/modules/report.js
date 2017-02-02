@@ -20,7 +20,7 @@ export const loadReport = () => {
       .catch((error) => {
         if (error.unauthorized) dispatch(unauthorized())
         if (error instanceof Error) throw error
-        dispatch(Notifications.error({ title: error.errors.base[0] }))
+        dispatch(Notifications.error({ title: error.errors._error }))
       })
   }
 }

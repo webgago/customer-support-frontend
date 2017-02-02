@@ -1,6 +1,5 @@
 import { SubmissionError } from 'redux-form'
 import * as appActions from 'containers/App/actions'
-import * as authActions from 'containers/Auth/actions'
 import Notifications from 'react-notification-system-redux'
 
 function submit (values, dispatch) {
@@ -11,14 +10,13 @@ function submit (values, dispatch) {
       { resolve, reject })
     )
   })
-  .then((user) => {
+  .then(() => {
     dispatch(Notifications.success({ title: 'You successfully signed up!' }))
-    dispatch(authActions.login(user.email, user.password))
-    return user
+    return null
   })
-  .catch((errors) => {
+  .catch(({ errors }) => {
     if (errors) {
-      throw new SubmissionError({ _error: errors.base && errors.base[0], ...errors })
+      throw new SubmissionError({ ...errors })
     }
   })
 }

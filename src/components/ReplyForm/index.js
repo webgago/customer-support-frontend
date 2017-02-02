@@ -51,8 +51,8 @@ Form.propTypes = {
   submitting: React.PropTypes.bool.isRequired,
   ticket: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
-  reopen: React.PropTypes.bool.isRequired,
-  close: React.PropTypes.bool.isRequired
+  reopen: React.PropTypes.bool,
+  close: React.PropTypes.bool
 }
 
 const ReplyForm = reduxForm({

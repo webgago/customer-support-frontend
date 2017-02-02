@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { FormattedRelative } from 'react-intl'
 import TicketsSearchForm from '../../../components/TicketsSearchForm'
+import TicketForm from '../../../components/TicketForm'
 import './Tickets.scss'
 
 export const Ticket = ({ ticket, deleteTicket, isAdmin }) => {
@@ -15,10 +16,12 @@ export const Ticket = ({ ticket, deleteTicket, isAdmin }) => {
     }
     return 'label label-default'
   }
+
   return (
     <tr key={ticket.id}>
       <td>
-        <Link to={`/tickets/${ticket.id}`}>{ticket.title}</Link>
+        <Link className='no-print' to={`/tickets/${ticket.id}`}>{ticket.title}</Link>
+        <span className='visible-print'>{ticket.title}</span>
       </td>
       <td>
         <span className={status()}>{ticket.status}</span>
@@ -29,7 +32,7 @@ export const Ticket = ({ ticket, deleteTicket, isAdmin }) => {
       <td>
         {ticket.user.full_name}
       </td>
-      {isAdmin && <td>
+      {isAdmin && <td className='no-print'>
         <button className='btn btn-danger' onClick={destroy(ticket.id)}>Delete</button>
       </td>}
     </tr>
@@ -51,8 +54,25 @@ export class Tickets extends React.Component {
     location: React.PropTypes.object.isRequired
   }
 
+  constructor (props) {
+    super(props)
+    this.state = { showingForm: false }
+  }
+
   isAdmin () {
     return this.props.currentUser.role === 'admin'
+  }
+
+  isCustomer () {
+    return this.props.currentUser.role === 'customer'
+  }
+
+  showForm () {
+    this.setState({ showingForm: true })
+  }
+
+  hideForm () {
+    this.setState({ showingForm: false })
   }
 
   componentDidMount () {
@@ -66,8 +86,8 @@ export class Tickets extends React.Component {
   }
 
   render () {
-    let { tickets, deleteTicket } = this.props
-    let q = this.props.location.query.q
+    let { tickets, deleteTicket, location: { query } } = this.props
+    let q = query.q
 
     return (
       <div className='tickets'>
@@ -75,18 +95,22 @@ export class Tickets extends React.Component {
         {tickets.length !== 0 && <div>
           <h2>
             Tickets
-            <small className='pull-right'>
-              <a href='/report' className='btn btn-sm btn-default'>Print</a>
-            </small>
+            {!this.isCustomer() && <small className='pull-right no-print'>
+              <a href='javascript:print()' className='btn btn-sm btn-default'>Print</a>
+            </small>}
+            {this.isCustomer() &&
+              <a onClick={() => this.showForm()} className='btn btn-success add-ticket pull-right'>Add Ticket</a>}
           </h2>
+          {this.state.showingForm &&
+            <TicketForm onSubmitSuccess={() => this.hideForm()} onCancel={() => this.hideForm()} />}
           <table className='table table-bordered'>
             <thead>
               <tr className='active'>
                 <td>Title</td>
                 <td>Status</td>
-                <td>Updated at</td>
+                <td>Updated</td>
                 <td>Author</td>
-                {this.isAdmin() && <td>Actions</td>}
+                {this.isAdmin() && <td className='no-print'>Actions</td>}
               </tr>
             </thead>
             <tbody>
@@ -94,13 +118,17 @@ export class Tickets extends React.Component {
             </tbody>
           </table>
         </div>}
-        {tickets.length === 0 && <div className='jumbotron'>
+        {tickets.length === 0 && <div><div className='jumbotron'>
           {q && <p className='text-center'>
             {`We couldn’t find any tickets matching '${q}'`}
           </p>}
           {!q && <p className='text-center'>
             No tickets yet
+            <br />
+            <a onClick={() => this.showForm()} className='btn btn-success add-ticket'>Add Ticket</a>
           </p>}
+        </div>
+          {this.state.showingForm && <TicketForm onSubmitSuccess={() => this.hideForm()} />}
         </div>}
       </div>
     )

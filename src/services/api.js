@@ -1,7 +1,7 @@
 import 'isomorphic-fetch'
 import jwtDecode from 'jwt-decode'
 
-const API_URL = 'http://localhost:3001'
+const API_URL = 'http://localhost:3000'
 
 function defaultHeaders (headers) {
   headers = {
@@ -16,6 +16,18 @@ function defaultHeaders (headers) {
   return headers
 }
 
+function convertErrors ({ errors }) {
+  if (errors) {
+    const reducer = (result, entry) => {
+      let key = entry[0]
+      let values = entry[1]
+      if (key === 'base') key = '_error'
+      return Object.assign(result, { [key]: values[0] })
+    }
+    return Object.entries(errors).reduce(reducer, {})
+  }
+}
+
 function request (url, method, body, headers = {}) {
   let options = { method, body: JSON.stringify(body), headers: defaultHeaders(headers) }
 
@@ -26,7 +38,8 @@ function request (url, method, body, headers = {}) {
           if (response.ok) {
             resolve(json)
           } else {
-            reject({ ...json, response })
+            let errors = convertErrors(json)
+            reject({ errors, response })
           }
         })
         .catch(() => {
@@ -92,6 +105,10 @@ export function reopenTicket (id) {
 
 export function closeTicket (id) {
   return put(`/tickets/${id}/close`)
+}
+
+export function createTicket (params) {
+  return post('/tickets', params)
 }
 
 export function searchTickets (params = {}) {

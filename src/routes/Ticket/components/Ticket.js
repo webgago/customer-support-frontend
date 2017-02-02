@@ -5,9 +5,9 @@ import ReplyForm from '../../../components/ReplyForm'
 
 export const Reply = ({ reply }) => {
   return (
-    <div className='reply' key={reply.id}>
+    <div className={`reply reply-${reply.author.role}`} key={reply.id}>
       <div className='reply__avatar'>
-        <div className='reply__avatar-placeholder' />
+        <div className='reply__avatar-placeholder'>{reply.author.first_name[0]}.{reply.author.last_name[0]}</div>
       </div>
       <div className='reply__title'>
         {reply.author.full_name}
@@ -50,6 +50,15 @@ export class Ticket extends React.Component {
     return this.props.ticket.replies && this.props.ticket.replies.length > 0
   }
 
+  status (ticket) {
+    if (ticket.new) {
+      return 'label label-warning'
+    } else if (ticket.closed) {
+      return 'label label-success'
+    }
+    return 'label label-default'
+  }
+
   render () {
     let { ticket } = this.props
     let dateFormat = {
@@ -61,7 +70,10 @@ export class Ticket extends React.Component {
     return (
       <div className='ticket'>
         <div className='ticket__title'>
-          <h2>{ticket.title} <small>#{ticket.id}</small></h2>
+          <h2>
+            {ticket.title}
+            <small>#{ticket.id} <span className={`pull-right ${this.status(ticket)}`}>{ticket.status}</span></small>
+          </h2>
         </div>
         <div className='ticket__content'>
           <blockquote>

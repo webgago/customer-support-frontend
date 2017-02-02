@@ -9,8 +9,6 @@ import {
 } from 'routes/Tickets/modules/tickets'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { UNAUTHORIZED, LOGOUT } from 'containers/Auth/constants'
-import { CALL_HISTORY_METHOD } from 'react-router-redux'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -51,28 +49,16 @@ describe('(Redux Module) Tickets', () => {
       fetchMock
         .post(/\/tickets\/search/, 401)
 
-      const expectedActions = [
-        { type: LOAD_TICKETS_REQUEST },
-        { type: LOGOUT, payload: { nextPathname: undefined } },
-        { type: CALL_HISTORY_METHOD, payload: { method: 'push', args: ['/'] } },
-        { type: UNAUTHORIZED },
-        { type: LOAD_TICKETS_FAILURE, error: { errors: { base: ['Unauthorized'] }, unauthorized: true } },
-        { type: 'RNS_SHOW_NOTIFICATION', title: 'Unauthorized', level: 'error' }
-      ]
+      const expectedAction = {
+        type: LOAD_TICKETS_FAILURE, error: { errors: { base: ['Unauthorized'] }, unauthorized: true }
+      }
       const store = mockStore({ tickets: [] })
 
       return store.dispatch(actions.loadTickets())
         .then(() => { // return of async actions
           let actions = store.getActions()
 
-          expect(actions[0]).to.have.deep.equal(expectedActions[0])
-          expect(actions[1]).to.have.deep.equal(expectedActions[1])
-          expect(actions[2]).to.have.deep.equal(expectedActions[2])
-          expect(actions[3]).to.have.deep.equal(expectedActions[3])
-          expect(actions[4]).to.have.deep.equal(expectedActions[4])
-
-          expectedActions[5].uid = actions[5].uid
-          expect(actions[5]).to.have.deep.equal(expectedActions[5])
+          expect(actions).to.deep.include.members([expectedAction])
         })
     })
   })

@@ -29,9 +29,9 @@ export function requestLogin (email, password, meta) {
   }
 }
 
-export function login (email, password, meta) {
+export function login (email, password, { resolve, reject }) {
   return (dispatch, getState) => {
-    dispatch(requestLogin(email, password, meta))
+    dispatch(requestLogin(email, password, { resolve, reject }))
 
     return api.login({ email, password })
       .then(({ token, user }) => {
@@ -39,11 +39,11 @@ export function login (email, password, meta) {
         const nextPathname = selectNextPathname()(getState())
         dispatch(push(nextPathname || '/'))
 
-        meta.resolve(user)
+        if (resolve) resolve(user)
       })
       .catch(({ errors, response }) => {
         dispatch(loginFailed(errors))
-        meta.reject(errors)
+        if (reject) reject({ errors })
       })
   }
 }
